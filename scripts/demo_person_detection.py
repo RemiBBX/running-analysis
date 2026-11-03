@@ -2,7 +2,7 @@ from pathlib import Path
 
 import cv2
 
-from running_analysis.pose_estimation import detect_person, load_person_detector
+from running_analysis.models.detector.rtdetr import RTDetrDetector
 from running_analysis.video import get_frame
 
 
@@ -16,18 +16,30 @@ def draw_box(frame, person_boxes):
     cv2.destroyAllWindows()
 
 
+# def main():
+#     video_path = Path("data/raw/video1.mp4")
+
+#     frame = get_frame(video_path, 5)
+
+#     person_image_processor, person_model = load_person_detector()
+
+#     person_boxes = detect_person(
+#         frame,
+#         person_image_processor=person_image_processor,
+#         person_model=person_model,
+#     )
+
+#     draw_box(frame, person_boxes)
+
+
 def main():
     video_path = Path("data/raw/video1.mp4")
 
-    frame = get_frame(video_path, 5)
+    frame = get_frame(video_path, 4.2)
 
-    person_image_processor, person_model = load_person_detector()
-
-    person_boxes = detect_person(
-        frame,
-        person_image_processor=person_image_processor,
-        person_model=person_model,
-    )
+    detector = RTDetrDetector()
+    detector.load_model()
+    person_boxes = detector.predict(frame)
 
     draw_box(frame, person_boxes)
 

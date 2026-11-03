@@ -8,7 +8,7 @@ def draw_keypoints(frame, person, threshold=0.5):
     for i, keypoint in enumerate(keypoints):
         x, y = int(keypoint[0]), int(keypoint[1])
         if scores[i] >= threshold:
-            cv2.circle(frame, (x, y), radius=5, color=(0, 0, 255), thickness=-1)
+            cv2.circle(frame, (x, y), radius=5, color=(0, 255, 0), thickness=-1)
 
     return frame
 

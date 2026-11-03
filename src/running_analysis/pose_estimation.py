@@ -54,3 +54,21 @@ def detect_person(img, person_image_processor, person_model, threshold=0.3):
     # person_boxes[:, 3] = person_boxes[:, 3] - person_boxes[:, 1]
 
     return person_boxes
+
+
+def estimate_pose(img, person_boxes, image_processor, model, threshold=0.3):
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    inputs = image_processor(img_rgb, boxes=[person_boxes], return_tensors="pt").to(
+        device
+    )
+
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    pose_results = image_processor.post_process_pose_estimation(
+        outputs, boxes=[person_boxes], threshold=threshold
+    )
+    image_pose_result = pose_results[0]  # results for first imaged
+
+    return image_pose_result

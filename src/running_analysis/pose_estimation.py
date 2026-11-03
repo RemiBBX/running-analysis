@@ -67,7 +67,7 @@ def estimate_pose(img, person_boxes, image_processor, model, threshold=0.3):
         outputs = model(**inputs)
 
     pose_results = image_processor.post_process_pose_estimation(
-        outputs, boxes=[person_boxes], threshold=threshold
+        outputs, boxes=[person_boxes]
     )
     image_pose_result = pose_results[0]  # results for first imaged
 

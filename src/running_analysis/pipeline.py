@@ -16,12 +16,14 @@ def process_frame(frame, person_detector, pose_estimator, threshold=0.3):
     person_boxes[:, 2] = person_boxes[:, 2] - person_boxes[:, 0]
     person_boxes[:, 3] = person_boxes[:, 3] - person_boxes[:, 1]
 
+    n = len(person_boxes)
+    print(f"Nombre de personnes détectées : {n}")
+    if n == 0:
+        return frame
+
     pose_result = estimate_pose(
         frame, person_boxes, image_processor, model, threshold=threshold
     )
-
-    n = len(pose_result)
-    print(f"Nombre de personnes détectées : {n}")
 
     for i, person in enumerate(pose_result):
         frame = draw_skeleton(frame, person)

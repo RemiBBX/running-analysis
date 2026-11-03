@@ -10,7 +10,7 @@ from running_analysis.pose_estimation import (
     load_pose_estimator,
 )
 from running_analysis.video import get_frame
-from running_analysis.visualization import draw_keypoints, draw_skeleton
+from running_analysis.visualization import draw_skeleton
 
 
 def main():
@@ -30,11 +30,7 @@ def main():
     pose_image_processor, pose_model = load_pose_estimator()
 
     pose_results = estimate_pose(
-        frame,
-        person_boxes,
-        pose_image_processor,
-        pose_model,
-        threshold = 0.3
+        frame, person_boxes, pose_image_processor, pose_model, threshold=0.3
     )
 
     # 3. Inspection des résultats
@@ -49,7 +45,7 @@ def main():
             else:
                 print(f"{key} : {type(value)}")
 
-    #frame = draw_keypoints(frame, pose_results[0])
+    # frame = draw_keypoints(frame, pose_results[0])
     frame = draw_skeleton(frame, person)
     cv2.imshow("keypoints", frame)
 

@@ -27,7 +27,7 @@ def read_video(path):
     cap = cv2.VideoCapture(str(path))
 
     if not cap.isOpened():
-        print("Echec de l'ouverture de la video")
+        raise ValueError("Échec de l'ouverture de la vidéo")
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -66,3 +66,26 @@ def get_frame(path, timestamp):
         raise ValueError("Impossible de lire la frame.")
 
     return frame
+
+
+def process_video(path, process_frame = None) :
+    cap = cv2.VideoCapture(str(path))
+
+    if not cap.isOpened():
+            raise ValueError("Échec de l'ouverture de la vidéo")
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            print("Fin de la vidéo.")
+            break
+
+        if process_frame is not None : 
+                frame = process_frame(frame)
+        cv2.imshow("Lecture video openCV", frame)
+
+        if cv2.waitKey(25) & 0xFF == ord("q"):
+            break
+    
+    cap.release()
+    cv2.destroyAllWindows()

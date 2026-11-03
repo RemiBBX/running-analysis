@@ -1,13 +1,13 @@
 from pathlib import Path
 
 import cv2
-
 from src.pose_estimation import detect_person, load_person_detector
 from src.video import get_frame
 
 video_path = Path("data/raw/video1.mp4")
 
-def draw_box(video_path) : 
+
+def draw_box(video_path):
     frame = get_frame(video_path, 5)
     person_image_processor, person_model = load_person_detector()
 
@@ -23,6 +23,7 @@ def draw_box(video_path) :
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     draw_box(video_path)
